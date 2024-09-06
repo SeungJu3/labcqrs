@@ -11,24 +11,21 @@ import lombok.Data;
 @Entity
 @Table(name = "Delivery_table")
 @Data
-//<<< DDD / Aggregate Root
 public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String address;
-
     private String customerId;
-
     private Integer quantity;
-
     private Long orderId;
+    private String status;
 
     @PostPersist
     public void onPostPersist() {
         DeliveryStarted deliveryStarted = new DeliveryStarted(this);
+        deliveryStarted.setStatus(DeliveryStarted.class.getSimpleName());
         deliveryStarted.publishAfterCommit();
     }
 
@@ -39,29 +36,14 @@ public class Delivery {
         return deliveryRepository;
     }
 
-    //<<< Clean Arch / Port Method
     public static void addToDeliveryList(OrderPlaced orderPlaced) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
         Delivery delivery = new Delivery();
+        delivery.setAddress(orderPlaced.getAddress());
+        delivery.setQuantity(orderPlaced.getQty());
+        delivery.setCustomerId(orderPlaced.getCustomerId());
+        delivery.setOrderId(orderPlaced.getId());
         repository().save(delivery);
 
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(orderPlaced.get???()).ifPresent(delivery->{
-            
-            delivery // do something
-            repository().save(delivery);
-
-
-         });
-        */
-
     }
-    //>>> Clean Arch / Port Method
 
 }
-//>>> DDD / Aggregate Root

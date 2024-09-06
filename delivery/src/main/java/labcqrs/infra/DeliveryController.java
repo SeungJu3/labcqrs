@@ -1,16 +1,12 @@
 package labcqrs.infra;
 
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import labcqrs.domain.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//<<< Clean Arch / Inbound Adaptor
+import labcqrs.domain.DeliveryRepository;
+
 
 @RestController
 // @RequestMapping(value="/deliveries")
@@ -20,4 +16,3 @@ public class DeliveryController {
     @Autowired
     DeliveryRepository deliveryRepository;
 }
-//>>> Clean Arch / Inbound Adaptor

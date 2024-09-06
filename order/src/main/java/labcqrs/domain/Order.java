@@ -1,12 +1,14 @@
 package labcqrs.domain;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PostPersist;
+import javax.persistence.PreRemove;
+import javax.persistence.Table;
+
 import labcqrs.OrderApplication;
-import labcqrs.domain.OrderCancelled;
-import labcqrs.domain.OrderPlaced;
 import lombok.Data;
 
 @Entity
@@ -34,10 +36,8 @@ public class Order {
     @PostPersist
     public void onPostPersist() {
         OrderPlaced orderPlaced = new OrderPlaced(this);
+        orderPlaced.setStatus(OrderPlaced.class.getSimpleName());
         orderPlaced.publishAfterCommit();
-
-        OrderCancelled orderCancelled = new OrderCancelled(this);
-        orderCancelled.publishAfterCommit();
     }
 
     @PreRemove
