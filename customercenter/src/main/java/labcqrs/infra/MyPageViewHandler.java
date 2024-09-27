@@ -1,7 +1,5 @@
 package labcqrs.infra;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import labcqrs.config.kafka.KafkaProcessor;
 import labcqrs.domain.*;
@@ -26,11 +24,9 @@ public class MyPageViewHandler {
 
             // view 객체 생성
             MyPage myPage = new MyPage();
-            // view 객체에 이벤트의 Value 를 set 함
             myPage.setOrderId(orderPlaced.getId());
             myPage.setProductId(orderPlaced.getProductId());
             myPage.setOrderStatus(orderPlaced.getStatus());
-            // view 레파지 토리에 save
             myPageRepository.save(myPage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,23 +34,18 @@ public class MyPageViewHandler {
     }
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void whenDeliveryStarted_then_UPDATE_1(
-        @Payload DeliveryStarted deliveryStarted
-    ) {
+    public void whenDeliveryStarted_then_UPDATE_1(@Payload DeliveryStarted deliveryStarted) {
         try {
             if (!deliveryStarted.validate()) return;
-            // view 객체 조회
+                // view 객체 조회
+            Optional<MyPage> myPageOptional = myPageRepository.findByOrderId(deliveryStarted.getOrderId());
 
-            List<MyPage> myPageList = myPageRepository.findByOrderId(
-                deliveryStarted.getOrderId()
-            );
-            for (MyPage myPage : myPageList) {
-                // view 객체에 이벤트의 eventDirectValue 를 set 함
-                myPage.setDeliveryStatus(deliveryStarted.getStatus());
-                // view 레파지 토리에 save
+            if( myPageOptional.isPresent()) {
+                MyPage myPage = myPageOptional.get();
+                myPage.setDeliveryStatus(deliveryStarted.getStatus());    
                 myPageRepository.save(myPage);
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

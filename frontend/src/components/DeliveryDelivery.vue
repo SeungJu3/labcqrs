@@ -15,14 +15,14 @@
             Delivery
         </v-card-title >        
 
-        <v-card-text>
+        <v-card-text style="background-color: white;">
             <String label="Address" v-model="value.address" :editMode="editMode" :inputUI="''"/>
             <String label="CustomerId" v-model="value.customerId" :editMode="editMode" :inputUI="''"/>
             <Number label="Quantity" v-model="value.quantity" :editMode="editMode" :inputUI="''"/>
             <Number label="OrderId" v-model="value.orderId" :editMode="editMode" :inputUI="''"/>
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions style="background-color: white;">
             <v-spacer></v-spacer>
             <v-btn
                 color="primary"

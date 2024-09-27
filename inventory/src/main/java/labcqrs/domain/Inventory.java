@@ -29,6 +29,11 @@ public class Inventory {
         return inventoryRepository;
     }
 
+    public void addProduct() {
+        //implement business logic here:
+
+    }
+
     //<<< Clean Arch / Port Method
     public static void decreaseStock(OrderPlaced orderPlaced) {
         //implement business logic here:

@@ -21,7 +21,7 @@ spring:
           uri: http://localhost:8084
           predicates:
             - Path=/deliveries/**, 
-        - id: customercenter
+        - id: customercenter bc
           uri: http://localhost:8085
           predicates:
             - Path=, 
@@ -61,8 +61,8 @@ spring:
           uri: http://delivery:8080
           predicates:
             - Path=/deliveries/**, 
-        - id: customercenter
-          uri: http://customercenter:8080
+        - id: customercenter bc
+          uri: http://customercenterBc:8080
           predicates:
             - Path=, 
         - id: frontend

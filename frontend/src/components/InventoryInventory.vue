@@ -15,11 +15,11 @@
             Inventory
         </v-card-title >        
 
-        <v-card-text>
+        <v-card-text style="background-color: white;">
             <Number label="Stock" v-model="value.stock" :editMode="editMode" :inputUI="''"/>
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions style="background-color: white;">
             <v-spacer></v-spacer>
             <v-btn
                 color="primary"
